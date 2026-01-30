@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Register | Smart Eco Farm</title>
+
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  font-family: "Segoe UI", Arial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+}
+
+/* HEADER */
+.header {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+}
+
+.box {
+  background: white;
+  width: 420px;
+  padding: 40px;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+h2 {
+  text-align: center;
+  color: #27ae60;
+  margin-bottom: 25px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+textarea { resize: none; }
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.inline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 5px 0 10px;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 20px;
+  background: #27ae60;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">🌱 Smart Eco Farm</div>
+
+<div class="box">
+  <h2>Register</h2>
+
+  <label>Profile Picture</label>
+  <input type="file" id="photo" accept="image/*">
+
+  <label>Full Name <span style="color:red">*</span></label>
+  <input type="text" id="name">
+
+  <label>Gender</label>
+  <select id="gender">
+    <option value="">Select</option>
+    <option>Male</option>
+    <option>Female</option>
+    <option>Other</option>
+  </select>
+
+  <label>Age</label>
+  <input type="number" id="age">
+
+  <label>Date of Birth</label>
+  <input type="date" id="dob">
+
+  <label>Primary Mobile Number</label>
+  <input type="tel" id="mobile">
+
+  <div class="inline">
+    <input type="checkbox" id="sameMobile" onclick="copyMobile()">
+    <label>Alternate number same as primary</label>
+  </div>
+
+  <label>Alternate Mobile Number</label>
+  <input type="tel" id="altMobile">
+
+  <label>Email <span style="color:red">*</span></label>
+  <input type="email" id="email">
+
+  <label>Password <span style="color:red">*</span></label>
+  <input type="password" id="password">
+
+  <label>Confirm Password <span style="color:red">*</span></label>
+  <input type="password" id="confirmPassword">
+
+  <label>Register As <span style="color:red">*</span></label>
+  <select id="role">
+    <option value="">Select</option>
+    <option value="farmer">Farmer</option>
+    <option value="consumer">Consumer</option>
+  </select>
+
+  <label>Regular Crops Grown (if Farmer)</label>
+  <textarea id="crops" rows="3"></textarea>
+
+  <button onclick="register()">Register</button>
+</div>
+
+<script>
+function copyMobile() {
+  const m = document.getElementById("mobile").value;
+  document.getElementById("altMobile").value =
+    document.getElementById("sameMobile").checked ? m : "";
+}
+
+function register() {
+  // Mandatory fields
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const confirm = document.getElementById("confirmPassword").value;
+  const role = document.getElementById("role").value;
+
+  // Validate mandatory fields only
+  if (!name || !email || !password || !confirm || !role) {
+    alert("Please fill all mandatory fields: Name, Email, Password, Confirm Password, Role");
+    return;
+  }
+
+  if (password !== confirm) {
+    alert("Password and Confirm Password must match");
+    return;
+  }
+
+  // Optional fields
+  const userData = {
+    name: name,
+    email: email,
+    role: role,
+    password: password, // demo purpose
+    gender: document.getElementById("gender").value,
+    age: document.getElementById("age").value,
+    dob: document.getElementById("dob").value,
+    mobile: document.getElementById("mobile").value,
+    altMobile: document.getElementById("altMobile").value,
+    crops: document.getElementById("crops").value
+  };
+
+  // Store user
+  localStorage.setItem(email, JSON.stringify(userData));
+
+  alert("Registration successful! Please login.");
+  window.location.href = "/login";
+}
+</script>
+
+
+</body>
+</html>

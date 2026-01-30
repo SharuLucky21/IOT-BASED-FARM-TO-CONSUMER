@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Smart Eco Farm</title>
+
+<style>
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f5f7fa;
+  color: #333;
+}
+
+/* HEADER */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background: white;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: #27ae60;
+}
+
+nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  position: relative;
+}
+
+nav a::after {
+  content: "";
+  height: 2px;
+  width: 0;
+  background: #27ae60;
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  transition: 0.3s;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+/* HERO */
+.hero {
+  height: 90vh;
+  background:
+    linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+    url("https://images.unsplash.com/photo-1501004318641-b39e6451bec6");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.hero-content {
+  max-width: 750px;
+  padding: 60px;
+}
+
+.hero h1 {
+  font-size: 44px;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* BUTTONS */
+.btn {
+  padding: 14px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: 15px;
+  display: inline-block;
+  transition: transform 0.2s;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+}
+
+.btn-green {
+  background: #27ae60;
+  color: white;
+}
+
+.btn-outline {
+  border: 2px solid white;
+  color: white;
+}
+
+/* SECTIONS */
+section {
+  padding: 90px 20px;
+  text-align: center;
+}
+
+section h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.section-text {
+  max-width: 950px;
+  margin: 20px auto 45px;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+/* CARDS */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 30px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.card {
+  background: white;
+  padding: 30px 25px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+}
+
+.card b {
+  font-size: 17px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* HOW IT WORKS */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 30px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.step {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  font-size: 16px;
+}
+
+/* CTA */
+.cta {
+  background: linear-gradient(135deg, #27ae60, #2ecc71);
+  color: white;
+  padding: 90px 20px;
+}
+
+.cta h2 {
+  font-size: 34px;
+  margin-bottom: 15px;
+}
+
+/* CONTACT */
+#contact p {
+  font-size: 16px;
+}
+
+/* FOOTER */
+footer {
+  background: #2c3e50;
+  color: white;
+  text-align: center;
+  padding: 25px;
+  font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">🌱 Smart Eco Farm</div>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#farmer">Farmer</a>
+    <a href="#consumer">Consumer</a>
+    <a href="#contact">Contact</a>
+    <a href="/login">Login / Register</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="hero-content">
+    <h1>IoT Based Farm-to-Consumer Tracking System</h1>
+    <p>
+      A smart agriculture platform that connects farmers and consumers
+      using real-time GPS, temperature, and humidity monitoring to ensure
+      transparency, freshness, and trust.
+    </p><br>
+    <a href="/farmer" class="btn btn-green">Farmer Dashboard</a>
+    <a href="/consumer" class="btn btn-outline">Consumer Dashboard</a>
+  </div>
+</div>
+
+<section>
+  <h2>How the System Works</h2>
+  <p class="section-text">
+    The Smart Eco Farm system integrates IoT-enabled devices with a cloud-based
+    backend to provide continuous monitoring of agricultural products throughout
+    the supply chain.
+  </p>
+
+  <div class="steps">
+    <div class="step">
+      <b>📦 Product Registration</b>
+      Farmers register agricultural products on the platform and assign a unique
+      IoT tracking device to each product.
+    </div>
+
+    <div class="step">
+      <b>🔗 IoT Data Collection</b>
+      Sensors continuously capture GPS location, temperature, and humidity data
+      during transportation.
+    </div>
+
+    <div class="step">
+      <b>☁ Cloud Processing</b>
+      Collected data is transmitted securely to a cloud server using REST APIs
+      and stored in real time.
+    </div>
+
+    <div class="step">
+      <b>📍 Consumer Tracking</b>
+      Consumers can track product location and environmental conditions in
+      real time through a web interface.
+    </div>
+  </div>
+</section>
+
+<section id="farmer">
+  <h2>👨‍🌾 Farmer Functionalities</h2>
+  <p class="section-text">
+    The farmer dashboard provides tools to manage products efficiently and
+    enables direct interaction with consumers.
+  </p>
+
+  <div class="cards">
+    <div class="card">
+      <b>Add Farm Products</b>
+      Farmers can list agricultural products by providing details such as
+      product name, price, and availability.
+    </div>
+
+    <div class="card">
+      <b>Assign IoT Devices</b>
+      Each product is linked with a unique IoT device ID for accurate real-time
+      monitoring during transit.
+    </div>
+
+    <div class="card">
+      <b>Monitor Product Movement</b>
+      Farmers can observe shipment progress and environmental conditions through
+      live data updates.
+    </div>
+
+    <div class="card">
+      <b>Increase Trust & Revenue</b>
+      Transparent tracking builds consumer confidence and helps farmers achieve
+      better market reach.
+    </div>
+  </div>
+</section>
+
+<section id="consumer" style="background:#ffffff">
+  <h2>👤 Consumer Benefits</h2>
+  <p class="section-text">
+    Consumers gain complete visibility into the quality, origin, and condition
+    of agricultural products before making purchasing decisions.
+  </p>
+
+  <div class="cards">
+    <div class="card">
+      <b>View Available Products</b>
+      Consumers can browse fresh agricultural products directly uploaded
+      by verified farmers.
+    </div>
+
+    <div class="card">
+      <b>Real-Time Location Tracking</b>
+      Live GPS tracking enables consumers to monitor product movement from
+      farm to destination.
+    </div>
+
+    <div class="card">
+      <b>Temperature & Humidity Monitoring</b>
+      Environmental data ensures products are transported under optimal
+      conditions to maintain freshness.
+    </div>
+
+    <div class="card">
+      <b>Quality Assurance & Transparency</b>
+      Access to real-time data allows consumers to verify quality and
+      trust the supply chain.
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <h2>Building Trust Between Farms and Families</h2>
+  <p>Experience transparency, freshness, and smart agriculture with IoT.</p><br>
+  <a href="/login" class="btn btn-outline">Get Started</a>
+</section>
+
+<section id="contact">
+  <h2>📞 Contact Us</h2>
+  <p>Email: ecofarm@email.com</p>
+  <p>Phone: +91 98765 43210</p>
+  <p>Instagram: @smart_ecofarm</p>
+</section>
+
+<footer>
+  © 2026 Smart Eco Farm | IoT Based Academic Project
+</footer>
+
+</body>
+</html>
