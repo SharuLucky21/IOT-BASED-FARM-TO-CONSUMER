@@ -169,7 +169,7 @@ function register() {
     name: name,
     email: email,
     role: role,
-    password: password, // demo purpose
+    password: password,
     gender: document.getElementById("gender").value,
     age: document.getElementById("age").value,
     dob: document.getElementById("dob").value,
@@ -178,11 +178,24 @@ function register() {
     crops: document.getElementById("crops").value
   };
 
-  // Store user
-  localStorage.setItem(email, JSON.stringify(userData));
-
-  alert("Registration successful! Please login.");
-  window.location.href = "/login";
+  fetch("/api/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(userData)
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.error) {
+      alert("Error: " + data.error);
+    } else {
+      alert("Registration successful! Please login.");
+      window.location.href = "/login";
+    }
+  })
+  .catch(err => {
+    console.error("Error:", err);
+    alert("An error occurred during registration.");
+  });
 }
 </script>
 

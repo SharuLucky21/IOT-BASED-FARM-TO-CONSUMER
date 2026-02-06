@@ -51,10 +51,17 @@ button {
     <input id="name" placeholder="Product Name">
     <input id="price" placeholder="Cost">
     <input id="deviceId" placeholder="Device ID">
-    
+    <select id="status">
+      <option>Available</option>
+      <option>In Transit</option>
+      <option>Sold</option>
+    </select>
     <button onclick="add_product()">Add Product</button>
     <p id="msg"></p>
   </div>
+
+  <h3>Your Products</h3>
+  <div id="farmerProducts"></div>
 </div>
 
 <script src="{{ url_for('static', filename='js/farmer.js') }}"></script>

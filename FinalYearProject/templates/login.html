@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>Login | Smart Eco Farm</title>
@@ -13,16 +13,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-/* HEADER */
-.header {
-  position: absolute;
-  top: 20px;
-  left: 30px;
-  font-size: 22px;
-  font-weight: bold;
-  color: white;
 }
 
 .box {
@@ -49,18 +39,10 @@ button {
   border: none;
   cursor: pointer;
 }
-
-.register a {
-  color: #27ae60;
-  font-weight: bold;
-  text-decoration: none;
-}
 </style>
 </head>
 
 <body>
-
-<div class="header">🌱 Smart Eco Farm</div>
 
 <div class="box">
   <h2>Login</h2>
@@ -70,9 +52,8 @@ button {
 
   <button onclick="login()">Login</button>
 
-  <p class="register">
-    Do not have an account?
-    <a href="/register">Register</a>
+  <p>Do not have an account?
+    <a href="/register" style="color:#27ae60;font-weight:bold">Register</a>
   </p>
 </div>
 
@@ -81,25 +62,31 @@ function login() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const userData = localStorage.getItem(email);
-
-  if (!userData) {
-    alert("User not registered");
-    return;
-  }
-
-  const user = JSON.parse(userData);
-
-  if (user.password !== password) {
-    alert("Incorrect password");
-    return;
-  }
-
-  if (user.role === "farmer") {
-    window.location.href = "/farmer";
-  } else {
-    window.location.href = "/consumer";
-  }
+  fetch("/api/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.error) {
+      alert("Error: " + data.error);
+    } else {
+      localStorage.setItem("user", JSON.stringify(data.user));
+      
+      const user = data.user;
+      // Role-based redirection
+      if (user.role === "farmer") {
+        window.location.href = "/farmer";
+      } else if (user.role === "consumer") {
+        window.location.href = "/consumer";
+      }
+    }
+  })
+  .catch(err => {
+    console.error("Error:", err);
+    alert("An error occurred during login.");
+  });
 }
 </script>
 

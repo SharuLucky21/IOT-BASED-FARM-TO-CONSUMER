@@ -61,14 +61,30 @@ p { margin:10px 0; }
 
 <script>
 const email = localStorage.getItem("loggedInUser");
-const user = JSON.parse(localStorage.getItem(email));
 
-document.getElementById("name").innerText = user.name;
-document.getElementById("email").innerText = user.email;
-document.getElementById("mobile").innerText = user.mobile;
-document.getElementById("gender").innerText = user.gender;
-document.getElementById("dob").innerText = user.dob;
-document.getElementById("crops").innerText = user.crops;
+if (!email) {
+  alert("No user logged in");
+  window.location.href = "/login";
+} else {
+  fetch(`/api/profile/${email}`)
+    .then(res => res.json())
+    .then(user => {
+      if (user.error) {
+        alert("Error fetching profile: " + user.error);
+      } else {
+        document.getElementById("name").innerText = user.name || "N/A";
+        document.getElementById("email").innerText = user.email || "N/A";
+        document.getElementById("mobile").innerText = user.mobile || "N/A";
+        document.getElementById("gender").innerText = user.gender || "N/A";
+        document.getElementById("dob").innerText = user.dob || "N/A";
+        document.getElementById("crops").innerText = user.crops || "N/A";
+      }
+    })
+    .catch(err => {
+      console.error("Error:", err);
+      alert("An error occurred while fetching the profile.");
+    });
+}
 </script>
 
 </body>
