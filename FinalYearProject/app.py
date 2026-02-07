@@ -172,12 +172,31 @@ def get_order_status(device_id):
         return jsonify({"status": "Ordered"}) # Default
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+@app.route("/api/order_details/<device_id>", methods=["GET"])
+def get_order_details(device_id):
+    try:
+        orders = db.reference("orders").get()
+        if orders:
+            for order_key, order_val in orders.items():
+                items = order_val.get("items", [])
+                for item in items:
+                    if item.get("deviceId") == device_id:
+                        return jsonify({
+                            "address": order_val.get("address"),
+                            "status": order_val.get("status", "Ordered"),
+                            "totalAmount": order_val.get("totalAmount")
+                        })
+        return jsonify({"error": "Order not found"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @app.route("/api/track/<device_id>", methods=["GET"])
 def track_device(device_id):
     tracking_data = db.reference("tracking/" + device_id).get()
     if tracking_data:
         return jsonify(tracking_data)
     return jsonify({"error": "No tracking data found"})
+
 
 @app.route("/track")
 def track_page():

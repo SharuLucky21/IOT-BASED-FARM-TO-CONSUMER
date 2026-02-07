@@ -32,18 +32,57 @@ def update_order_status(status):
     except Exception as e:
         print(f"❌ Error updating status: {e}")
 
-# ... (rest of the source/destination config)
+def get_order_address():
+    try:
+        orders = db.reference("orders").get()
+        if orders:
+            for key, val in orders.items():
+                items = val.get("items", [])
+                for item in items:
+                    if item.get("deviceId") == DEVICE_ID:
+                        return val.get("address", "Hyderabad")
+        return "Hyderabad"
+    except Exception as e:
+        print(f"❌ Error fetching address: {e}")
+        return "Hyderabad"
 
-# Realistic Hyderabad Route Waypoints (following main roads)
+# Mock Geocoder
+CITY_COORDINATES = {
+    "hyderabad": {"lat": 17.3850, "lon": 78.4867},
+    "bangalore": {"lat": 12.9716, "lon": 77.5946},
+    "anantapur": {"lat": 14.6819, "lon": 77.6006},
+    "tadipatri": {"lat": 14.9142, "lon": 78.0125},
+    "dharmavaram": {"lat": 14.4137, "lon": 77.7126},
+    "gunttakal": {"lat": 15.1610, "lon": 77.3750},
+    "kurnool": {"lat": 15.8281, "lon": 78.0373},
+    "chennai": {"lat": 13.0827, "lon": 80.2707},
+    "mumbai": {"lat": 19.0760, "lon": 72.8777},
+    "pune": {"lat": 18.5204, "lon": 73.8567}
+}
+
+SRIT_COORDS = {"lat": 14.74536, "lon": 77.68958}
+
+address = get_order_address().lower()
+destination = None
+
+for city, coords in CITY_COORDINATES.items():
+    if city in address:
+        destination = coords
+        break
+
+if not destination:
+    # Default to Anantapur if city not found in mock geocoder (closer than Hyderabad)
+    destination = CITY_COORDINATES["anantapur"]
+
+# Create waypoints: Start at SRIT, end at Destination
+# For simplicity, we'll just do a straight path or 3 segments if it's long
 waypoints = [
-    {"lat": 17.4401, "lon": 78.3489}, # Gachibowli
-    {"lat": 17.4486, "lon": 78.3908}, # Madhapur
-    {"lat": 17.4325, "lon": 78.4470}, # Panjagutta
-    {"lat": 17.4447, "lon": 78.4664}, # Begumpet
-    {"lat": 17.4399, "lon": 78.4983}  # Secunderabad
+    SRIT_COORDS,
+    {"lat": (SRIT_COORDS["lat"] + destination["lat"]) / 2, "lon": (SRIT_COORDS["lon"] + destination["lon"]) / 2},
+    destination
 ]
 
-steps_per_segment = 10
+steps_per_segment = 15
 interval = 3
 
 print("🚚 Delivery Simulation Started (Realistic Road Path)\n")
